@@ -1,7 +1,7 @@
 const { sequelize } = require('sequelize');
 require('dotenv').config();
 
-//connect to database
+//create sequelize instance used to define tables and connect to database
 const sequelize = new sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
@@ -13,3 +13,17 @@ const sequelize = new sequelize(
         logging: false,
     }
 );
+
+//load models
+const User = require('./User')(sequelize);
+const Note = require('./Note')(sequelize);
+
+//Define relations
+User.hasMany(Note, { foreignKey: 'userID', onDelete: 'CASCADE' })
+Note.belongsTo(User, { foreignKey: 'userID' })
+
+module.exports = {
+    sequelize,
+    User,
+    Note,
+};
