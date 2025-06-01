@@ -8,7 +8,7 @@ app.use(express.json());
 
 //Routes
 //(all paths need a /api prefix)
-app.use('/api', notesRoutes);
+app.use('/api/notes', notesRoutes);
 
 //Root route
 app.get('/', (req, res) => {
